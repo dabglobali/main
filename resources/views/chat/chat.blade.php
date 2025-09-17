@@ -45,7 +45,7 @@
         const friendId = @json($friend->id);
         const chatMessages = document.getElementById('chat-messages');
 
-        // Calculate the shared channel name based on user IDs
+        // Calculate the shared chat room ID
         const chatRoomId = authId < friendId ? `${authId}_${friendId}` : `${friendId}_${authId}`;
 
         // Send message functionality

@@ -20,17 +20,16 @@ class MessageSent implements ShouldBroadcastNow
         $this->chatMessage = $message;
     }
 
-    // Broadcasting the message to a shared channel
+    // Ensure the channel is shared between the sender and receiver
     public function broadcastOn(): Channel
     {
-        // Ensure that both users get the same channel, regardless of who is the sender or receiver.
         $senderId = $this->chatMessage->sender_id;
         $receiverId = $this->chatMessage->receiver_id;
 
-        // Sorting IDs ensures the channel is always consistent (e.g., 1_2, not 2_1)
+        // Sort user IDs to ensure consistent channel names
         $chatRoomId = $senderId < $receiverId ? "{$senderId}_{$receiverId}" : "{$receiverId}_{$senderId}";
 
-        return new Channel('chat.' . $chatRoomId);
+        return new Channel('chat.' . $chatRoomId); // Shared channel for the conversation between two users
     }
 
     public function broadcastAs(): string
