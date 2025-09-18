@@ -1,11 +1,19 @@
-// resources/js/bootstrap.js
+import axios from 'axios';
+window.axios = axios;
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
+// Import Echo for real-time functionality
 import Echo from 'laravel-echo';
-import Pusher from 'pusher-js';  // Replace with Reverb if you're using Reverb instead of Pusher
+import Pusher from 'pusher-js';
+
+window.Pusher = Pusher;
 
 window.Echo = new Echo({
-    broadcaster: 'pusher', // Use 'reverb' if you're using Reverb
-    key: 'duoeommsom1vfa4ah8oq',  // Replace with your Reverb key
-    cluster: 'mt1',  // Update with your cluster, if required
+    broadcaster: 'reverb',
+    key: import.meta.env.VITE_REVERB_APP_KEY,
+    wsHost: import.meta.env.VITE_REVERB_HOST,
+    wsPort: import.meta.env.VITE_REVERB_PORT,
+    wssPort: import.meta.env.VITE_REVERB_PORT,
     forceTLS: false,
+    enabledTransports: ['ws', 'wss'],
 });
